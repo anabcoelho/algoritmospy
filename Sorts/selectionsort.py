@@ -1,3 +1,4 @@
+#https://www.youtube.com/watch?v=0-W8OEwLebQ&list=PLOmdoKois7_FK-ySGwHBkltzB11snW7KQ&index=5
 a = [6, 9, 3, 0, 5]
 N = len(a)
 i = 0

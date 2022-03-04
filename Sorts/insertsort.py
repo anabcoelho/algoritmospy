@@ -1,3 +1,4 @@
+#https://www.youtube.com/watch?v=EdIKIf9mHk0&list=PLOmdoKois7_FK-ySGwHBkltzB11snW7KQ&index=1
 #Jeito 1
 a1=[8,2,4,9,3,5,1]
 for i in range(1,len(a1)):

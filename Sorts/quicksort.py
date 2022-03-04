@@ -1,3 +1,4 @@
+#https://www.youtube.com/watch?v=kDgvnbUIqT4&list=PLOmdoKois7_FK-ySGwHBkltzB11snW7KQ&index=4
 # This function takes last element as pivot, places the pivot element at its correct position in sorted array, and places all smaller (smaller than pivot) to left of pivot and all greater elements to right of pivot
 def partition(arr,low,high):
 	i = ( low-1 )		 # index of smaller element

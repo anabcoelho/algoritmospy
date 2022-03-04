@@ -1,0 +1,3 @@
+Algoritmos de ordenação.
+Colocam uma lista em ordem.
+15 Sorting Algorithms in 6 Minutes: https://youtu.be/kPRA0W1kECg

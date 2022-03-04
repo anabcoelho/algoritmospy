@@ -1,3 +1,4 @@
+#https://www.youtube.com/watch?v=dENca26N6V4&list=PLOmdoKois7_FK-ySGwHBkltzB11snW7KQ&index=3
 def mergeSort(lista):
     if len(lista) > 1:
         meio = len(lista) // 2  # separando a lista da esquerda e da direita

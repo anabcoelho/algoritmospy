@@ -1,3 +1,5 @@
+#Bubblesort
+# https://youtu.be/semGJAJ7i74
 a=[3,2,45,6,7,4,32]
 N=len(a)
 for i in range(N-1, 0, -1):
