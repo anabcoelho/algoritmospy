@@ -1,6 +1,6 @@
 from tkinter import *
 #Criar nova janela
-window= Tk()
+window = Tk()
 # Título da Janela
 window.title ('meu programa')
 #Entrada de texto
