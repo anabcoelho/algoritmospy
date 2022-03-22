@@ -36,10 +36,22 @@ class Cartao:
         tipo = input('Qual o tipo do cartão? \n Comum, estudante, vale-transporte ou idoso?')
         tipos_passageiros=['comum','estudante', 'vale-transporte', 'idoso']
         while tipo not in tipos_passageiros:
-            tipo= input(RED+'Insira um tipo válido'+ RESET +'\n Comum, estudante, vale-transporte ou idoso?')
+            tipo= input(RED+'Insira um tipo válido'+ RESET +
+                        '\n Comum, estudante, vale-transporte ou idoso?')
         data_emissao = datetime.today().strftime('%Y-%m-%d')
         Cartao(id_cartao, id_user, creditos, tipo, data_emissao).set_cartao(id_cartao, id_user, creditos, tipo, data_emissao)
 
+    def get_cartao(self):
+        from conectar import conectar
+        import pandas as pd
+
+        conexao = conectar()
+        comando = "SELECT * from ana_rodrigues.cartao;"
+        cursor = conexao.cursor()
+        cursor.execute(comando)
+        print([column[0] for column in cursor.description])
+        for row in cursor:
+            print(row)
 
 
 x=Cartao(0,0,0,0,0)

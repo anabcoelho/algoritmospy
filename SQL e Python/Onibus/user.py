@@ -9,7 +9,7 @@ class Usuario:
         self.bairro = bairro
         self.data_nascimento = data_nascimento
 
-    def set_user(self, id_user, nome, sobrenome, email, bairro, data_nascimento):
+    def set_usuario(self, id_user, nome, sobrenome, email, bairro, data_nascimento):
         from conectar import conectar
         from datetime import datetime
         conexao=conectar()
@@ -35,9 +35,22 @@ class Usuario:
         bairro = input ('Informe o bairro do proprietário')
         data_nascimento = input('Informe a data de nascimento \n formato: aaaa-mm-dd')
         Usuario(id_user, nome, sobrenome, email, bairro, data_nascimento).\
-            set_user(id_user, nome, sobrenome, email, bairro, data_nascimento)
+            set_usuario(id_user, nome, sobrenome, email, bairro, data_nascimento)
 
+    def get_usuario(self):
+        from conectar import conectar
+        import pandas as pd
 
+        conexao = conectar()
+        comando = "SELECT * from ana_rodrigues.usuario;"
+        cursor = conexao.cursor()
+        cursor.execute(comando)
 
+        print([column[0] for column in cursor.description])
+        for row in cursor:
+            print(row)
+        #DF=pd.DataFrame(cursor.fetchall())
+        #print(DF)
+        #DF.to_excel("FileExample.xlsx", sheet_name='Results')
 
-Usuario(0,0,0,0,0,0).novo_usuario()
+Usuario(0,0,0,0,0,0).get_usuario()
