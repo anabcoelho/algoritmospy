@@ -7,18 +7,21 @@
 
 class Cartao:
 
-    def __init__(self):
-        self.id_cartao=0
-        self.id_user = 0
-        self.creditos =0
-        self.tipo = 0
-        self.data_emissao =0
+    def __init__(self,id_cartao, id_user, creditos, tipo, data_emissao):
+        self.id_cartao=id_cartao
+        self.id_user = id_user
+        self.creditos =creditos
+        self.tipo = tipo
+        self.data_emissao = data_emissao
 
     def set_cartao(self, id_cartao, id_user, creditos, tipo, data_emissao):
         from conectar import conectar
+        from datetime import datetime
         conexao=conectar()
+        data_convert = datetime.strptime(self.data_emissao, '%Y-%m-%d')
+
         comando = f"""INSERT INTO ana_rodrigues.cartao 
-        VALUES( {self.id_cartao}, {self.id_user},{self.creditos},'{self.tipo}','{self.data_emissao}');"""
+        VALUES( {self.id_cartao}, {self.id_user},{self.creditos},'{self.tipo}','{data_convert}');"""
         cursor = conexao.cursor()
         cursor.execute(comando)
         conexao.commit()
@@ -34,10 +37,10 @@ class Cartao:
         tipos_passageiros=['comum','estudante', 'vale-transporte', 'idoso']
         while tipo not in tipos_passageiros:
             tipo= input(RED+'Insira um tipo válido'+ RESET +'\n Comum, estudante, vale-transporte ou idoso?')
-        data_emissao = datetime.today().strftime('%Y%m%d')
-        Cartao().set_cartao(id_cartao, id_user, creditos, tipo, data_emissao)
+        data_emissao = datetime.today().strftime('%Y-%m-%d')
+        Cartao(id_cartao, id_user, creditos, tipo, data_emissao).set_cartao(id_cartao, id_user, creditos, tipo, data_emissao)
 
 
 
-
-Cartao().novo_cartao()
+x=Cartao(0,0,0,0,0)
+x.novo_cartao()
