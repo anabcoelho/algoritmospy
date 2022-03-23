@@ -10,12 +10,12 @@ class Usuario:
         self.data_nascimento = data_nascimento
 
     def set_usuario(self, id_user, nome, sobrenome, email, bairro, data_nascimento):
-        from conectar import conectar
+        import conectar
         from datetime import datetime
-        conexao=conectar()
+        conexao = conectar.conectar()
 
         # convert datetime string to object, specifying input format
-        #o data_nascimento não vai
+        #o data_nascimento não vai, pelo o que eu entendi, precisa ter hora(??)
         data_convert = datetime.strptime(self.data_nascimento, '%Y-%m-%d')
 
         comando = f"""INSERT INTO ana_rodrigues.usuario 
@@ -26,6 +26,7 @@ class Usuario:
         cursor = conexao.cursor()
         cursor.execute(comando)
         cursor.commit()
+        conectar.desconectar(cursor, conexao)
 
     def novo_usuario (self):
         id_user = int(input('Informe o ID do proprietário'))
@@ -38,10 +39,10 @@ class Usuario:
             set_usuario(id_user, nome, sobrenome, email, bairro, data_nascimento)
 
     def get_usuario(self):
-        from conectar import conectar
+        import conectar
         import pandas as pd
 
-        conexao = conectar()
+        conexao = conectar.conectar()
         comando = "SELECT * from ana_rodrigues.usuario;"
         cursor = conexao.cursor()
         cursor.execute(comando)
@@ -52,5 +53,4 @@ class Usuario:
         #DF=pd.DataFrame(cursor.fetchall())
         #print(DF)
         #DF.to_excel("FileExample.xlsx", sheet_name='Results')
-
-Usuario(0,0,0,0,0,0).get_usuario()
+        conectar.desconectar(cursor, conexao)

@@ -15,9 +15,9 @@ class Cartao:
         self.data_emissao = data_emissao
 
     def set_cartao(self, id_cartao, id_user, creditos, tipo, data_emissao):
-        from conectar import conectar
+        import conectar
         from datetime import datetime
-        conexao=conectar()
+        conexao=conectar.conectar()
         data_convert = datetime.strptime(self.data_emissao, '%Y-%m-%d')
 
         comando = f"""INSERT INTO ana_rodrigues.cartao 
@@ -25,6 +25,7 @@ class Cartao:
         cursor = conexao.cursor()
         cursor.execute(comando)
         conexao.commit()
+        conectar.desconectar(cursor, conexao)
 
     def novo_cartao (self):
         RED = "\033[1;31m"
@@ -42,17 +43,14 @@ class Cartao:
         Cartao(id_cartao, id_user, creditos, tipo, data_emissao).set_cartao(id_cartao, id_user, creditos, tipo, data_emissao)
 
     def get_cartao(self):
-        from conectar import conectar
+        import conectar
         import pandas as pd
 
-        conexao = conectar()
+        conexao = conectar.conectar()
         comando = "SELECT * from ana_rodrigues.cartao;"
         cursor = conexao.cursor()
         cursor.execute(comando)
         print([column[0] for column in cursor.description])
         for row in cursor:
             print(row)
-
-
-x=Cartao(0,0,0,0,0)
-x.novo_cartao()
+        conectar.desconectar(cursor, conexao)

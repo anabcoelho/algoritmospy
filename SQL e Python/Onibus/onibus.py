@@ -10,9 +10,9 @@ class Onibus:
 
 
     def set_onibus(self, placa, linha, modelo, ano, id_motorista):
-        from conectar import conectar
+        import conectar
         from datetime import datetime
-        conexao=conectar()
+        conexao=conectar.conectar()
 
         # convert datetime string to object, specifying input format
         #o data_nascimento não vai
@@ -25,6 +25,7 @@ class Onibus:
         cursor = conexao.cursor()
         cursor.execute(comando)
         cursor.commit()
+        conectar.desconectar(cursor, conexao)
 
     #placa: int
     #linha: int
@@ -42,15 +43,14 @@ class Onibus:
             set_onibus(placa, linha, modelo, ano, id_motorista)
 
     def get_onibus(self):
-        from conectar import conectar
+        import conectar
         import pandas as pd
 
-        conexao = conectar()
+        conexao = conectar.conectar()
         comando = "SELECT * from ana_rodrigues.onibus;"
         cursor = conexao.cursor()
         cursor.execute(comando)
         print([column[0] for column in cursor.description])
         for row in cursor:
             print(row)
-
-Onibus(0,0,0,0,0).get_onibus()
+        conectar.desconectar(cursor, conexao)

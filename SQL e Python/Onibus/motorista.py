@@ -16,9 +16,9 @@ class Motorista:
 
     def set_motorista(self, id_motorista, nCNH, nome,
                  sobrenome, data_nascimento):
-        from conectar import conectar
+        import conectar
         from datetime import datetime
-        conexao=conectar()
+        conexao=conectar.conectar()
 
         # convert datetime string to object, specifying input format
         #o data_nascimento não vai
@@ -31,6 +31,7 @@ class Motorista:
         cursor = conexao.cursor()
         cursor.execute(comando)
         cursor.commit()
+        conectar.desconectar(cursor, conexao)
 
     def novo_motorista (self):
         RED = "\033[1;31m"
@@ -46,15 +47,14 @@ class Motorista:
                  sobrenome, data_nascimento)
 
     def get_motorista(self):
-        from conectar import conectar
+        import conectar
         import pandas as pd
 
-        conexao = conectar()
+        conexao = conectar.conectar()
         comando = "SELECT * from ana_rodrigues.motorista;"
         cursor = conexao.cursor()
         cursor.execute(comando)
         print([column[0] for column in cursor.description])
         for row in cursor:
             print(row)
-
-Motorista(0,0,0,0,0).novo_motorista()
+        conectar.desconectar(cursor, conexao)

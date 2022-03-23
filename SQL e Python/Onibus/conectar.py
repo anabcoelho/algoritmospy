@@ -6,5 +6,8 @@ def conectar():
     conexao = pyodbc.connect(dados_conexao.connect_data())
     print('conexão bem sucedida')
     return conexao
+def desconectar(cursor,conexao):
+    cursor.close()
+    conexao.close()
 
 
