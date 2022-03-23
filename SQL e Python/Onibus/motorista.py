@@ -38,6 +38,9 @@ class Motorista:
         RESET = "\033[0;0m"
         id_motorista = int(input('Informe o ID do motorista'))
         nCNH = int(input('Informe CNH do motorista'))
+        if len(str(nCNH)) != 11:
+            nCNH=int(input('Insira um número de CNH válido (11 dígitos): '))
+
         nome=input('Informe o nome do proprietário ')
         sobrenome = input ('Informe o sobrenome do proprietário')
         data_nascimento = input('Informe a data de nascimento \n formato: aaaa-mm-dd')

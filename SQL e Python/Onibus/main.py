@@ -19,6 +19,7 @@ print(BOLD+'Seja bem-vindo ao sistema PoccoCard, o cartão de transporte municip
 
 while True:
     acao = input('O que deseja fazer? \n Cadastrar, consultar dados ou sair?')
+
     if acao.upper() == 'SAIR':
         break
 
