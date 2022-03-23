@@ -29,11 +29,11 @@ class Usuario:
         conectar.desconectar(cursor, conexao)
 
     def novo_usuario (self):
-        id_user = int(input('Informe o ID do proprietário'))
-        nome=input('Informe o nome do proprietário ')
-        sobrenome = input ('Informe o sobrenome do proprietário')
-        email = input('Informe o email do proprietário')
-        bairro = input ('Informe o bairro do proprietário')
+        id_user = int(input('Informe o ID do usuário'))
+        nome=input('Informe o nome do usuário ')
+        sobrenome = input ('Informe o sobrenome do usuário')
+        email = input('Informe o email do usuário')
+        bairro = input ('Informe o bairro do usuário')
         data_nascimento = input('Informe a data de nascimento \n formato: aaaa-mm-dd')
         Usuario(id_user, nome, sobrenome, email, bairro, data_nascimento).\
             set_usuario(id_user, nome, sobrenome, email, bairro, data_nascimento)

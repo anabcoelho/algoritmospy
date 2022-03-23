@@ -26,8 +26,11 @@ while True:
     elif acao.upper() == 'CADASTRAR':
         while True:
             cl=input('O que deseja cadastrar?\n digite sair para sair')
+            #não sei pq não vai direto.
 
-            if cl.upper() == 'CARTAO' or 'CARTÃO':
+
+
+            if cl.upper() == ('CARTAO' or 'CARTÃO'):
                 print('entrei em cartao', cl.upper())
                 cartao.Cartao(0,0,0,0,0).novo_cartao()
                 print('Cartão cadastrado')
@@ -36,11 +39,11 @@ while True:
                 motorista.Motorista(0,0,0,0,0).novo_motorista()
                 print('motorista cadastrado')
 
-            elif cl.upper() == 'ONIBUS' or 'ÔNIBUS':
+            elif cl.upper() == ('ONIBUS' or 'ÔNIBUS'):
                 onibus.Onibus(0,0,0,0,0).novo_onibus()
                 print('Ônibus cadastrado')
 
-            elif cl.upper() == 'USUARIO' or 'USUÁRIO':
+            elif cl.upper() == ('USUARIO' or 'USUÁRIO'):
                 user.Usuario(0,0,0,0,0,0).novo_usuario()
                 print('usuário cadastrado')
 
