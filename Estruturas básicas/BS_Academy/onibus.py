@@ -1,4 +1,4 @@
-import bcolors
+
         # A B C D E
 onibus= [[7,7,7,7,7],  #0 linha do motorista
          [0,0,7,0,0],  #1
