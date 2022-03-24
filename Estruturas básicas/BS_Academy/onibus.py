@@ -51,8 +51,10 @@ while True:
             print(' ')
             err=True
     if err != True:
-        onibus[fileira][coluna] = 1
-
+        if onibus[fileira][coluna] == 0:
+            onibus[fileira][coluna] = 1
+        else:
+            print(RED+'Lugar ocupado'+RESET)
 
 #é hora de salvar
 
