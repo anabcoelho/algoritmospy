@@ -9,21 +9,8 @@ class Usuario:
         self.bairro = bairro
         self.data_nascimento = data_nascimento
 
-#Métodos setter para cada atributo
-    def set_id_user (self,sid_user):
-        self.id_user= sid_user
-    def set_nome (self, snome):
-        self.nome = snome
-    def set_sobrenome(self,ssobrenome):
-        self.sobrenome = ssobrenome
-    def set_email(self,semail):
-        self.email =semail
-    def set_bairro(self,sbairro):
-        self.bairro = sbairro
-    def set_data_nascimento (self,sdata_nasc):
-        self.data_nascimento = sdata_nasc
 
-    def insert_usuario(self):
+    def insert_usuario(self, id_user, nome, sobrenome, email, bairro, data_nascimento):
         import conectar
         from datetime import datetime
         conexao = conectar.conectar()
@@ -42,9 +29,19 @@ class Usuario:
         cursor.commit()
         conectar.desconectar(cursor, conexao)
 
+    def novo_usuario (self):
+        id_user = int(input('Informe o ID do usuário'))
+        nome=input('Informe o nome do usuário ')
+        sobrenome = input ('Informe o sobrenome do usuário')
+        email = input('Informe o email do usuário')
+        bairro = input ('Informe o bairro do usuário')
+        data_nascimento = input('Informe a data de nascimento \n formato: aaaa-mm-dd')
+        Usuario(id_user, nome, sobrenome, email, bairro, data_nascimento).\
+            insert_usuario(id_user, nome, sobrenome, email, bairro, data_nascimento)
+
     def select_usuario(self):
         import conectar
-
+        import pandas as pd
 
         conexao = conectar.conectar()
         comando = "SELECT * from ana_rodrigues.usuario;"
@@ -54,7 +51,7 @@ class Usuario:
         print([column[0] for column in cursor.description])
         for row in cursor:
             print(row)
+        #DF=pd.DataFrame(cursor.fetchall())
+        #print(DF)
+        #DF.to_excel("FileExample.xlsx", sheet_name='Results')
         conectar.desconectar(cursor, conexao)
-
-    def salvar_usuario(self):
-        pass

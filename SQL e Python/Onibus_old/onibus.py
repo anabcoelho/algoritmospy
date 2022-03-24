@@ -8,40 +8,8 @@ class Onibus:
         self.ano = ano
         self.id_motorista=id_motorista
 
-    # Métodos getter para cada atributo
-    def get_placa(self):
-        return self.placa
-    def get_linha(self):
-        return self.linha
-    def get_modelo(self):
-        return self.modelo
-    def get_ano(self):
-        return self.ano
-    def get_id_motorista(self):
-        return self.id_motorista
 
-    # Métodos setter para cada atributo
-
-    def set_placa(self, p):
-        self.placa = p
-
-    def set_linha(self,l):
-        self.linha = l
-
-    def set_modelo(self,m):
-        self.modelo = m
-
-    def set_ano(self, a):
-        self.ano = a
-
-    def set_id_motorista(self, idm):
-        self.id_motorista = idm
-
-
-
-
-
-    def insert_onibus(self):
+    def insert_onibus(self, placa, linha, modelo, ano, id_motorista):
         import conectar
         from datetime import datetime
         conexao=conectar.conectar()
@@ -64,7 +32,15 @@ class Onibus:
     #Modelo str
     #Ano date
     #ID motorista: int
-
+    def novo_onibus (self):
+        placa = int(input('Informe o número da placa'))
+        linha=int(input('Informe o número da linha '))
+        modelo= input ('Informe o modelo do ônibus')
+        ano = input('Informe o ano do õnibus (4 dígitos)')
+        id_motorista = int(input('Informe o ID do motorista'))
+        Onibus(placa, linha, modelo,
+               ano, id_motorista).\
+            insert_onibus(placa, linha, modelo, ano, id_motorista)
 
     def select_onibus(self):
         import conectar
@@ -78,6 +54,3 @@ class Onibus:
         for row in cursor:
             print(row)
         conectar.desconectar(cursor, conexao)
-
-    def salvar_usuario(self):
-        pass

@@ -14,7 +14,34 @@ class Cartao:
         self.tipo = tipo
         self.data_emissao = data_emissao
 
-    def set_cartao(self, id_cartao, id_user, creditos, tipo, data_emissao):
+        # Métodos getter para cada atributo
+    def get_id_cartao(self):
+            return self.id_cartao
+    def get_id_user(self):
+            return self.id_user
+    def get_creditos(self):
+            return self.creditos
+    def get_tipo(self):
+            return self.tipo
+    def get_data_emissao(self):
+            return self.data_emissao
+
+
+        # Métodos setter para cada atributo
+    def set_id_cartao(self, ic):
+            self.id_cartao =ic
+    def set_id_user(self, iu):
+            self.id_user = iu
+    def set_creditos(self, c):
+            self.creditos = c
+    def set_tipo(self, t):
+            self.tipo=t
+    def set_data_emissao(self,de):
+        self.data_emissao = de
+
+
+
+    def insert_cartao(self):
         import conectar
         from datetime import datetime
         conexao=conectar.conectar()
@@ -27,51 +54,7 @@ class Cartao:
         conexao.commit()
         conectar.desconectar(cursor, conexao)
 
-    def novo_cartao (self):
-        import conectar
-        from datetime import datetime
-
-        RED = "\033[1;31m"
-        RESET = "\033[0;0m"
-
-        id_cartao = int(input('Qual o ID do cartão?'))
-        id_user = int(input('Informe o ID do proprietário'))
-        creditos = float(input('Quantos créditos?'))
-
-        #conferindo o tipo.
-        tipo = input('Qual o tipo do cartão? \n Comum, estudante, vale-transporte ou idoso?')
-        tipos_passageiros=['COMUM','ESTUDANTE', 'VALE-TRANSPORTE', 'IDOSO']
-        while True:
-            if tipo.upper() not in tipos_passageiros:
-                tipo= input(RED+'Insira um tipo válido'+ RESET +
-                        '\n Comum, estudante, vale-transporte ou idoso?')
-            elif tipo.upper() == 'ESTUDANTE' or tipo.upper() =='IDOSO':
-                conexao = conectar.conectar()
-                comando = f'''SELECT year(data_de_nascimento) from ana_rodrigues.usuario
-                        where id_user = {id_user} ;'''
-                cursor = conexao.cursor()
-                cursor.execute(comando)
-
-                anoatual = int(datetime.today().strftime('%Y'))
-                idade=anoatual-cursor.fetchone()[0]
-
-                if tipo.upper() == "IDOSO" and idade<60:
-                        print(f'passageiro tem {idade} anos, não é apto para essa modalidade')
-                        tipo = input(RED + 'Insira um tipo válido, e autorizado' + RESET)
-                if tipo.upper() == "ESTUDANTE" and idade>21:
-                    docum=input('Conferir documentação de estudante \n é válida? s/n')
-                    if docum.upper() == 'S':
-                        break
-                    else:
-                         tipo = input(RED + 'Insira um tipo válido, e autorizado' + RESET)
-            elif tipo.upper() in tipos_passageiros:
-                break
-
-
-        data_emissao = datetime.today().strftime('%Y-%m-%d')
-        Cartao(id_cartao, id_user, creditos, tipo, data_emissao).set_cartao(id_cartao, id_user, creditos, tipo, data_emissao)
-
-    def get_cartao(self):
+    def select_cartao(self):
         import conectar
         import pandas as pd
 
@@ -83,3 +66,6 @@ class Cartao:
         for row in cursor:
             print(row)
         conectar.desconectar(cursor, conexao)
+
+    def salvar_usuario(self):
+        pass

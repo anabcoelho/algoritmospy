@@ -21,7 +21,7 @@ create table ana_rodrigues.motorista(
 	numero_CNH int not null,
 	nome varchar(50) not null,
 	sobrenome varchar (50) not null,
-	data_nascimento date not null
+	data_nascimento date 
 );
 
 create table ana_rodrigues.onibus(

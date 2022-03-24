@@ -14,41 +14,18 @@ class Motorista:
         self.sobrenome = sobrenome
         self.data_nascimento = data_nascimento
 
-        # Métodos getter para cada atributo
-    def get_id_motorista(self):
-            return self.id_motorista
-    def get_CNH(self):
-            return self.nCNH
-    def get_nome(self):
-            return self.nome
-    def get_id_sobrenome(self):
-            return self.sobrenome
-    def get_data_nascimento(self):
-            return self.data_nascimento
-
-    # Métodos setter para cada atributo
-    def set_id_motorista(self,v):
-        self.id_motorista = v
-    def set_CNH(self,c):
-        self.nCNH = c
-    def set_nome(self, n):
-        self.nome = n
-    def set_id_sobrenome(self, s):
-        self.sobrenome = s
-    def set_data_nascimento(self, d):
-        self.data_nascimento = d
-
-    def insert_motorista(self):
+    def insert_motorista(self, id_motorista, nCNH, nome,
+                 sobrenome, data_nascimento):
         import conectar
         from datetime import datetime
         conexao=conectar.conectar()
 
         # convert datetime string to object, specifying input format
-
+        #o data_nascimento não vai
         data_convert = datetime.strptime(self.data_nascimento, '%Y-%m-%d')
-
+        int_cnh=int(self.nCNH)
         comando = f"""INSERT INTO ana_rodrigues.motorista 
-        VALUES( {self.id_motorista}, {self.nCNH},'{self.nome}',
+        VALUES( {self.id_motorista}, {int_cnh},'{self.nome}',
         '{self.sobrenome}', '{data_convert}');"""
 
         cursor = conexao.cursor()
@@ -56,6 +33,21 @@ class Motorista:
         cursor.commit()
         conectar.desconectar(cursor, conexao)
 
+    def novo_motorista (self):
+        RED = "\033[1;31m"
+        RESET = "\033[0;0m"
+        id_motorista = int(input('Informe o ID do motorista'))
+        nCNH = int(input('Informe CNH do motorista'))
+        if len(str(nCNH)) != 11:
+            nCNH=int(input('Insira um número de CNH válido (11 dígitos): '))
+
+        nome=input('Informe o nome do proprietário ')
+        sobrenome = input ('Informe o sobrenome do proprietário')
+        data_nascimento = input('Informe a data de nascimento \n formato: aaaa-mm-dd')
+        Motorista(id_motorista, nCNH, nome,
+                 sobrenome, data_nascimento).\
+            insert_motorista(id_motorista, nCNH, nome,
+                 sobrenome, data_nascimento)
 
     def select_motorista(self):
         import conectar
@@ -69,6 +61,3 @@ class Motorista:
         for row in cursor:
             print(row)
         conectar.desconectar(cursor, conexao)
-
-    def salvar_usuario(self):
-        pass
