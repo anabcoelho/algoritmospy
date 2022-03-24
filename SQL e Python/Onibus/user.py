@@ -42,19 +42,28 @@ class Usuario:
         cursor.commit()
         conectar.desconectar(cursor, conexao)
 
-    def select_usuario(self):
+    def select_usuario(self,save):
         import conectar
-
 
         conexao = conectar.conectar()
         comando = "SELECT * from ana_rodrigues.usuario;"
         cursor = conexao.cursor()
         cursor.execute(comando)
+        headers=[column[0] for column in cursor.description]
 
-        print([column[0] for column in cursor.description])
         for row in cursor:
             print(row)
+
+        if save is True:
+            import csv
+            cursor.execute(comando)
+            results = cursor.fetchall()
+            with open(r'usuario.csv', 'w') as csvfile:
+                writer = csv.writer(csvfile, delimiter=',', lineterminator='\r',
+                                    quoting=csv.QUOTE_ALL, escapechar='\\')
+                writer.writerow(headers)
+                writer.writerows(results)
+            print('salvo')
         conectar.desconectar(cursor, conexao)
 
-    def salvar_usuario(self):
-        pass
+

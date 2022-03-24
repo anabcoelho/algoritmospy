@@ -66,17 +66,28 @@ class Onibus:
     #ID motorista: int
 
 
-    def select_onibus(self):
+    def select_onibus(self,save):
         import conectar
-        import pandas as pd
 
         conexao = conectar.conectar()
         comando = "SELECT * from ana_rodrigues.onibus;"
         cursor = conexao.cursor()
         cursor.execute(comando)
-        print([column[0] for column in cursor.description])
+        headers = [column[0] for column in cursor.description]
+
         for row in cursor:
             print(row)
+
+        if save is True:
+            import csv
+            cursor.execute(comando)
+            results = cursor.fetchall()
+            with open(r'onibus.csv', 'w') as csvfile:
+                writer = csv.writer(csvfile, delimiter=',', lineterminator='\r',
+                                    quoting=csv.QUOTE_ALL, escapechar='\\')
+                writer.writerow(headers)
+                writer.writerows(results)
+            print('salvo')
         conectar.desconectar(cursor, conexao)
 
     def salvar_usuario(self):

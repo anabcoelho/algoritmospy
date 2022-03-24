@@ -29,8 +29,6 @@ while True:
         while True:
             cl=input('O que deseja cadastrar?\n digite sair para sair')
 
-
-
             if cl.upper() == ('CARTAO' or 'CARTÃO'):
                 import conectar
                 from datetime import datetime
@@ -153,28 +151,48 @@ while True:
 
     elif acao.upper() == 'CONSULTAR':
 
+
         while True:
             cl = input('O que deseja consultar? \n digite sair para sair')
 
+            if cl.upper() == 'SAIR':
+                break
+
+            save = input('Deseja salvar um CSV da consulta? sim ou não')
+
 
             if cl.upper() == ('USUARIO' or 'USUÁRIO'):
-                usu=user.Usuario
-                usu.select_usuario()
+                usu = user.Usuario
+                if save.upper() == 'SIM':
+                    usu.select_usuario(True, True)
+                else:
+                    usu.select_usuario(0,0)
+
+
 
             elif cl.upper() == ('CARTAO' or 'CARTÃO'):
-                card=cartao.Cartao
-                card.select_cartao()
+
+                card=cartao.Cartao (0,0,0,0,0)
+                if save.upper() == 'SIM':
+                    card.select_cartao(True, True)
+                else:
+                    card.select_cartao(0,0)
 
             elif cl.upper() == 'MOTORISTA':
                 mot=motorista.Motorista(0,0,0,0,0)
-                mot.select_motorista()
+                if save.upper() == 'SIM':
+                    mot.select_motorista(True, True)
+                else:
+                    mot.select_motorista(0,0)
 
             elif cl.upper() == ('ONIBUS' or 'ÔNIBUS'):
                 on=onibus.Onibus(0, 0, 0, 0, 0)
-                on.select_onibus()
+                if save.upper() == 'SIM':
+                    on.select_onibus(True, True)
+                else:
+                    on.select_onibus(0,0)
 
-            elif cl.upper() == 'SAIR':
-                break
+
 
             else:
                 print(RED + 'Selecione uma classe válida' + RESET)

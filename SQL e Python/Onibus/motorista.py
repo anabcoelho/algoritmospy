@@ -57,18 +57,26 @@ class Motorista:
         conectar.desconectar(cursor, conexao)
 
 
-    def select_motorista(self):
+    def select_motorista(self, save):
         import conectar
-        import pandas as pd
 
         conexao = conectar.conectar()
         comando = "SELECT * from ana_rodrigues.motorista;"
         cursor = conexao.cursor()
         cursor.execute(comando)
-        print([column[0] for column in cursor.description])
+        headers = [column[0] for column in cursor.description]
+
         for row in cursor:
             print(row)
-        conectar.desconectar(cursor, conexao)
 
-    def salvar_usuario(self):
-        pass
+        if save is True:
+            import csv
+            cursor.execute(comando)
+            results = cursor.fetchall()
+            with open(r'motorista.csv', 'w') as csvfile:
+                writer = csv.writer(csvfile, delimiter=',', lineterminator='\r',
+                                    quoting=csv.QUOTE_ALL, escapechar='\\')
+                writer.writerow(headers)
+                writer.writerows(results)
+            print('salvo')
+        conectar.desconectar(cursor, conexao)
