@@ -8,17 +8,9 @@ class Onibus:
         self.ano = ano
         self.id_motorista=id_motorista
 
-    # Métodos getter para cada atributo
-    def get_placa(self):
-        return self.placa
-    def get_linha(self):
-        return self.linha
-    def get_modelo(self):
-        return self.modelo
-    def get_ano(self):
-        return self.ano
-    def get_id_motorista(self):
-        return self.id_motorista
+    # Métodos getter
+    def get_onibus(self):
+        return self.placa, self.linha, self.modelo, self.ano, self.id_motorista
 
     # Métodos setter para cada atributo
 
@@ -74,7 +66,7 @@ class Onibus:
         cursor = conexao.cursor()
         cursor.execute(comando)
         headers = [column[0] for column in cursor.description]
-
+        print(headers)
         for row in cursor:
             print(row)
 

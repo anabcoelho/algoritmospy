@@ -23,6 +23,9 @@ class Usuario:
     def set_data_nascimento (self,sdata_nasc):
         self.data_nascimento = sdata_nasc
 
+    def get_usuario(self):
+        return self.id_user, self.nome, self.sobrenome,self.email, self.bairro, self.data_nascimento
+
     def insert_usuario(self):
         import conectar
         from datetime import datetime

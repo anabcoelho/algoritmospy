@@ -14,17 +14,12 @@ class Motorista:
         self.sobrenome = sobrenome
         self.data_nascimento = data_nascimento
 
-        # Métodos getter para cada atributo
-    def get_id_motorista(self):
-            return self.id_motorista
-    def get_CNH(self):
-            return self.nCNH
-    def get_nome(self):
-            return self.nome
-    def get_id_sobrenome(self):
-            return self.sobrenome
-    def get_data_nascimento(self):
-            return self.data_nascimento
+        # Métodos getter
+    def get_motorista(self):
+            return self.id_motorista, self.nCNH, self.nome,
+                 self.sobrenome, self.data_nascimento
+
+
 
     # Métodos setter para cada atributo
     def set_id_motorista(self,v):
@@ -65,7 +60,7 @@ class Motorista:
         cursor = conexao.cursor()
         cursor.execute(comando)
         headers = [column[0] for column in cursor.description]
-
+        print(headers)
         for row in cursor:
             print(row)
 

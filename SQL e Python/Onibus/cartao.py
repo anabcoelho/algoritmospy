@@ -15,16 +15,8 @@ class Cartao:
         self.data_emissao = data_emissao
 
         # Métodos getter para cada atributo
-    def get_id_cartao(self):
-            return self.id_cartao
-    def get_id_user(self):
-            return self.id_user
-    def get_creditos(self):
-            return self.creditos
-    def get_tipo(self):
-            return self.tipo
-    def get_data_emissao(self):
-            return self.data_emissao
+    def get_cartao(self):
+            return self.id_cartao, self.id_user, self.creditos, self.tipo, self.data_emissao
 
 
         # Métodos setter para cada atributo
@@ -62,7 +54,7 @@ class Cartao:
         cursor = conexao.cursor()
         cursor.execute(comando)
         headers = [column[0] for column in cursor.description]
-
+        print(headers)
         for row in cursor:
             print(row)
 
