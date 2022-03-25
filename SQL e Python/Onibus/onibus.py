@@ -81,6 +81,3 @@ class Onibus:
                 writer.writerows(results)
             print('salvo')
         conectar.desconectar(cursor, conexao)
-
-    def salvar_usuario(self):
-        pass

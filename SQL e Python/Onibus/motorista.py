@@ -16,8 +16,7 @@ class Motorista:
 
         # Métodos getter
     def get_motorista(self):
-            return self.id_motorista, self.nCNH, self.nome,
-                 self.sobrenome, self.data_nascimento
+            return self.id_motorista, self.nCNH, self.nome, self.sobrenome, self.data_nascimento
 
 
 

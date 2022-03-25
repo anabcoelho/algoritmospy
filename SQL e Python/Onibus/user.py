@@ -32,7 +32,7 @@ class Usuario:
         conexao = conectar.conectar()
 
         # convert datetime string to object, specifying input format
-        #o data_nascimento não vai, pelo o que eu entendi, precisa ter hora(??)
+
         data_convert = datetime.strptime(self.data_nascimento, '%Y-%m-%d')
 
         comando = f"""INSERT INTO ana_rodrigues.usuario 
@@ -56,6 +56,8 @@ class Usuario:
 
         for row in cursor:
             print(row)
+
+
 
         if save is True:
             import csv
