@@ -93,7 +93,7 @@ while True:
 
                 nCNH = int(input('Informe CNH do motorista'))
                 while len(str(nCNH)) != 11:
-                    nCNH = int(input(RED + 'Insira um número de CNH válido (11 dígitos):' + RESET))
+                    nCNH = int(input(f'{RED}Insira um número de CNH válido (11 dígitos): {RESET}'))
                 mot.set_CNH(nCNH)
 
                 nome = input('Informe o nome do proprietário ')
@@ -145,7 +145,7 @@ while True:
             elif cl.upper() == 'SAIR':
                 break
             else:
-                print(RED+ 'Selecione uma classe válida'+RESET)
+                print(RED+ f'{RED} Selecione uma classe válida {RESET}')
 
 
 
@@ -163,39 +163,61 @@ while True:
 
             if cl.upper() == ('USUARIO' or 'USUÁRIO'):
                 usu = user.Usuario
-                if save.upper() == 'SIM':
-                    usu.select_usuario(True, True)
-                else:
-                    usu.select_usuario(0,0)
+                retornou = usu.select_usuario(0)
+                print(retornou[1])
+                for row in retornou[0]:
+                    print(row)
 
+                if save.upper() == 'SIM':
+                    import salvarcsv
+                    salvarcsv.salvar_csv(cl, retornou[0], retornou[1])
+                break
 
 
             elif cl.upper() == ('CARTAO' or 'CARTÃO'):
 
-                card=cartao.Cartao (0,0,0,0,0)
+                card = cartao.Cartao
+                retornou = card.select_cartao(0)
+                print(retornou[1])
+                for row in retornou[0]:
+                    print(row)
+
                 if save.upper() == 'SIM':
-                    card.select_cartao(True, True)
-                else:
-                    card.select_cartao(0,0)
+                    import salvarcsv
+
+                    salvarcsv.salvar_csv(cl, retornou[0], retornou[1])
+                break
 
             elif cl.upper() == 'MOTORISTA':
-                mot=motorista.Motorista(0,0,0,0,0)
+                mot=motorista.Motorista
+                retornou = mot.select_motorista(0)
+                print(retornou[1])
+                for row in retornou[0]:
+                    print(row)
+
                 if save.upper() == 'SIM':
-                    mot.select_motorista(True, True)
-                else:
-                    mot.select_motorista(0,0)
+                    import salvarcsv
+
+                    salvarcsv.salvar_csv(cl, retornou[0], retornou[1])
+                break
 
             elif cl.upper() == ('ONIBUS' or 'ÔNIBUS'):
-                on=onibus.Onibus(0, 0, 0, 0, 0)
+                on=onibus.Onibus
+                retornou = on.select_cartao(0)
+                print(retornou[1])
+                for row in retornou[0]:
+                    print(row)
+
                 if save.upper() == 'SIM':
-                    on.select_onibus(True, True)
-                else:
-                    on.select_onibus(0,0)
+                    import salvarcsv
+
+                    salvarcsv.salvar_csv(cl, retornou[0], retornou[1])
+                break
 
 
 
             else:
-                print(RED + 'Selecione uma classe válida' + RESET)
+                print(f'{RED} Selecione uma classe válida {RESET}')
     else:
-        print(RED+'Digite uma ação válida'+ RESET)
+        print(f'{RED} Digite uma ação válida {RESET}')
 print('Finalizando...')
