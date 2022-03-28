@@ -32,10 +32,10 @@ class Motorista:
     def set_data_nascimento(self, d):
         self.data_nascimento = d
 
-    def insert_motorista(self):
-        import conectar
+    def insert_motorista(self,cursor):
+
         from datetime import datetime
-        conexao=conectar.conectar()
+
 
         # convert datetime string to object, specifying input format
 
@@ -45,20 +45,17 @@ class Motorista:
         VALUES( {self.id_motorista}, {self.nCNH},'{self.nome}',
         '{self.sobrenome}', '{data_convert}');"""
 
-        cursor = conexao.cursor()
         cursor.execute(comando)
         cursor.commit()
-        conectar.desconectar(cursor, conexao)
 
 
-    def select_motorista(self):
-        import conectar
 
-        conexao = conectar.conectar()
+    def select_motorista(self,cursor):
+
+
         comando = "SELECT * from ana_rodrigues.motorista;"
-        cursor = conexao.cursor()
         cursor.execute(comando)
         results = cursor.fetchall()
         headers = [column[0] for column in cursor.description]
-        conectar.desconectar(cursor, conexao)
+
         return results, headers

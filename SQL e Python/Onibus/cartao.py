@@ -33,28 +33,42 @@ class Cartao:
 
 
 
-    def insert_cartao(self):
-        import conectar
+    def insert_cartao(self,cursor):
+
         from datetime import datetime
-        conexao=conectar.conectar()
+
         data_convert = datetime.strptime(self.data_emissao, '%Y-%m-%d')
 
         comando = f"""INSERT INTO ana_rodrigues.cartao 
         VALUES( {self.id_cartao}, {self.id_user},{self.creditos},'{self.tipo}','{data_convert}');"""
-        cursor = conexao.cursor()
+
         cursor.execute(comando)
-        conexao.commit()
-        conectar.desconectar(cursor, conexao)
+        cursor.commit()
 
-    def select_cartao(self):
-        import conectar
+    def checar_tipo(self, cursor):
+        comando = f'''SELECT year(data_de_nascimento) from ana_rodrigues.usuario
+                                                where id_user = {id_user} ;'''
+        cursor.execute(comando)
 
-        conexao = conectar.conectar()
+        anoatual = int(datetime.today().strftime('%Y'))
+        idade = anoatual - cursor.fetchone()[0]
+        return (idade)
+
+    def select_cartao(self,cursor):
+
         comando = "SELECT * from ana_rodrigues.cartao;"
-        cursor = conexao.cursor()
+
         cursor.execute(comando)
         results = cursor.fetchall()
         headers = [column[0] for column in cursor.description]
-        conectar.desconectar(cursor, conexao)
         return results, headers
+
+    def atualizar_saldo(self,id_cartao,creditos,cursor):
+        comando = f"""UPDATE ana_rodrigues.cartao
+                    set creditos = creditos + {creditos} 
+                    where id_cartao = {id_cartao} ;"""
+
+        cursor.execute(comando)
+        cursor.commit()
+        print('valor atualizado')
 

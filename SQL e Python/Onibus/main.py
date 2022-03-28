@@ -17,8 +17,13 @@ BOLD  = "\033[;1m"
 
 print(BOLD+'Seja bem-vindo ao sistema PoccoCard, o cartão de transporte municipal da PoccoBus'+RESET)
 
+#vamo conectar logo
+import conectar
+conexao = conectar.conectar()
+cursor = conexao.cursor()
+
 while True:
-    acao = input('O que deseja fazer? \n Cadastrar, consultar dados ou sair?')
+    acao = input('O que deseja fazer? \n Cadastrar, consultar dados, atualizar ou sair?')
 
     if acao.upper() == 'SAIR':
         break
@@ -54,14 +59,8 @@ while True:
                                      '\n Comum, estudante, vale-transporte ou idoso?')
                     elif tipo.upper() == 'ESTUDANTE' or tipo.upper() == 'IDOSO':
                         print("checando informações")
-                        conexao = conectar.conectar()
-                        comando = f'''SELECT year(data_de_nascimento) from ana_rodrigues.usuario
-                                        where id_user = {id_user} ;'''
-                        cursor = conexao.cursor()
-                        cursor.execute(comando)
 
-                        anoatual = int(datetime.today().strftime('%Y'))
-                        idade = anoatual - cursor.fetchone()[0]
+                        idade=cartao.Cartao.checar_tipo(0,cursor)
 
                         if tipo.upper() == "IDOSO" and idade < 60:
                             print(f'passageiro tem {idade} anos, não é apto para essa modalidade')
@@ -78,9 +77,10 @@ while True:
                 data_emissao = datetime.today().strftime('%Y-%m-%d')
                 card.set_data_emissao (data_emissao)
 
-                card.insert_cartao()
+                card.insert_cartao(cursor)
 
                 print('Cartão cadastrado')
+                break
 
             elif cl.upper() == 'MOTORISTA':
 
@@ -103,8 +103,9 @@ while True:
                 data_nascimento = input('Informe a data de nascimento \n formato: aaaa-mm-dd')
                 mot.set_data_nascimento(data_nascimento)
 
-                mot.insert_motorista()
+                mot.insert_motorista(cursor)
                 print('motorista cadastrado')
+                break
 
             elif cl.upper() == ('ONIBUS' or 'ÔNIBUS'):
                 bus=onibus.Onibus(0,0,0,0,0)
@@ -119,9 +120,10 @@ while True:
                 id_motorista = int(input('Informe o ID do motorista'))
                 bus.set_id_motorista(id_motorista)
 
-                bus.insert_onibus()
+                bus.insert_onibus(cursor)
 
                 print('Ônibus cadastrado')
+                break
 
             elif cl.upper() == ('USUARIO' or 'USUÁRIO'):
                 U=user.Usuario(0,0,0,0,0,0)
@@ -137,10 +139,11 @@ while True:
                 U.set_bairro(bairro)
                 data_nascimento = input('Informe a data de nascimento \n formato: aaaa-mm-dd')
                 U.set_data_nascimento(data_nascimento)
-                U.insert_usuario()
+                U.insert_usuario(cursor)
+
 
                 print('usuário cadastrado')
-
+                break
 
             elif cl.upper() == 'SAIR':
                 break
@@ -163,7 +166,7 @@ while True:
 
             if cl.upper() == ('USUARIO' or 'USUÁRIO'):
                 usu = user.Usuario
-                retornou = usu.select_usuario(0)
+                retornou = usu.select_usuario(0,cursor)
                 print(retornou[1])
                 for row in retornou[0]:
                     print(row)
@@ -177,7 +180,7 @@ while True:
             elif cl.upper() == ('CARTAO' or 'CARTÃO'):
 
                 card = cartao.Cartao
-                retornou = card.select_cartao(0)
+                retornou = card.select_cartao(0, cursor)
                 print(retornou[1])
                 for row in retornou[0]:
                     print(row)
@@ -190,7 +193,7 @@ while True:
 
             elif cl.upper() == 'MOTORISTA':
                 mot=motorista.Motorista
-                retornou = mot.select_motorista(0)
+                retornou = mot.select_motorista(0,cursor)
                 print(retornou[1])
                 for row in retornou[0]:
                     print(row)
@@ -203,7 +206,7 @@ while True:
 
             elif cl.upper() == ('ONIBUS' or 'ÔNIBUS'):
                 on=onibus.Onibus
-                retornou = on.select_cartao(0)
+                retornou = on.select_onibus(0,cursor)
                 print(retornou[1])
                 for row in retornou[0]:
                     print(row)
@@ -218,6 +221,25 @@ while True:
 
             else:
                 print(f'{RED} Selecione uma classe válida {RESET}')
+    elif acao.upper() == 'ATUALIZAR':
+        while True:
+            cl=input('O que deseja atualizar? \n bairro ou créditos')
+            if cl.upper() == 'BAIRRO':
+                id_user= int(input('Insira o ID do usuário '))
+                bairro=input('Qual é o novo bairro? ')
+                user.Usuario.atualizar_bairro(0,bairro,id_user,cursor)
+                break
+
+            elif cl.upper() == ('CREDITOS' or 'CRÉDITOS'):
+                id_cartao=int(input('Informe o ID do cartão: '))
+                c=float(input('Quantos créditos foram adicionados? '))
+                cartao.Cartao.atualizar_saldo(0,id_cartao,c,cursor)
+                break
+
+            else:
+                print('Tente de novo')
     else:
         print(f'{RED} Digite uma ação válida {RESET}')
+
+conectar.desconectar(cursor, conexao)
 print('Finalizando...')

@@ -33,10 +33,10 @@ class Onibus:
 
 
 
-    def insert_onibus(self):
-        import conectar
+    def insert_onibus(self,cursor):
+
         from datetime import datetime
-        conexao=conectar.conectar()
+
 
         # convert datetime string to object, specifying input format
         #o data_nascimento não vai
@@ -46,10 +46,10 @@ class Onibus:
         comando = f"""INSERT INTO ana_rodrigues.onibus
         VALUES({self.placa},{self.linha},'{self.modelo}','{data_convert}',{self.id_motorista} );"""
 
-        cursor = conexao.cursor()
+
         cursor.execute(comando)
         cursor.commit()
-        conectar.desconectar(cursor, conexao)
+
 
     #placa: int
     #linha: int
@@ -58,14 +58,14 @@ class Onibus:
     #ID motorista: int
 
 
-    def select_onibus(self):
+    def select_onibus(self, cursor):
         import conectar
 
-        conexao = conectar.conectar()
+
         comando = "SELECT * from ana_rodrigues.onibus;"
-        cursor = conexao.cursor()
+
         cursor.execute(comando)
         results = cursor.fetchall()
         headers = [column[0] for column in cursor.description]
-        conectar.desconectar(cursor, conexao)
+
         return results, headers
