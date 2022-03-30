@@ -45,7 +45,8 @@ class Cartao:
         cursor.execute(comando)
         cursor.commit()
 
-    def checar_tipo(self, cursor):
+    def checar_tipo(self, id_user, cursor):
+        from datetime import datetime
         comando = f'''SELECT year(data_de_nascimento) from ana_rodrigues.usuario
                                                 where id_user = {id_user} ;'''
         cursor.execute(comando)

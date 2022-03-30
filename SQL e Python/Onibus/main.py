@@ -1,24 +1,20 @@
 
-# 4 classes Usuario, Cartao, Motorista, Onibus, Main
-#           usuario
-#           select, insert, novo
-#
-
 
 import user
 import cartao
 import motorista
 import onibus
+import conectar
 
-#cores para agradar o dia
-RED   = "\033[1;31m"
+# cores para agradar o dia
+RED = "\033[1;31m"
 RESET = "\033[0;0m"
-BOLD  = "\033[;1m"
+BOLD = "\033[;1m"
 
 print(BOLD+'Seja bem-vindo ao sistema PoccoCard, o cartão de transporte municipal da PoccoBus'+RESET)
 
-#vamo conectar logo
-import conectar
+# vamo conectar logo
+
 conexao = conectar.conectar()
 cursor = conexao.cursor()
 
@@ -28,17 +24,16 @@ while True:
     if acao.upper() == 'SAIR':
         break
 
-
     elif acao.upper() == 'CADASTRAR':
 
         while True:
-            cl=input('O que deseja cadastrar?\n digite sair para sair')
+            cl = input('O que deseja cadastrar?\n digite sair para sair')
 
             if cl.upper() == ('CARTAO' or 'CARTÃO'):
                 import conectar
                 from datetime import datetime
 
-                card=cartao.Cartao(0,0,0,0,0)
+                card = cartao.Cartao(0, 0, 0, 0, 0)
                 RED = "\033[1;31m"
                 RESET = "\033[0;0m"
 
@@ -49,7 +44,6 @@ while True:
                 creditos = float(input('Quantos créditos?'))
                 card.set_creditos(creditos)
 
-
                 tipo = input('Qual o tipo do cartão? \n Comum, estudante, vale-transporte ou idoso?')
                 # conferindo o tipo.
                 tipos_passageiros = ['COMUM', 'ESTUDANTE', 'VALE-TRANSPORTE', 'IDOSO']
@@ -59,8 +53,7 @@ while True:
                                      '\n Comum, estudante, vale-transporte ou idoso?')
                     elif tipo.upper() == 'ESTUDANTE' or tipo.upper() == 'IDOSO':
                         print("checando informações")
-
-                        idade=cartao.Cartao.checar_tipo(0,cursor)
+                        idade = card.checar_tipo(id_user, cursor)
 
                         if tipo.upper() == "IDOSO" and idade < 60:
                             print(f'passageiro tem {idade} anos, não é apto para essa modalidade')
@@ -75,7 +68,7 @@ while True:
                         break
                 card.set_tipo(tipo)
                 data_emissao = datetime.today().strftime('%Y-%m-%d')
-                card.set_data_emissao (data_emissao)
+                card.set_data_emissao(data_emissao)
 
                 card.insert_cartao(cursor)
 
@@ -84,7 +77,7 @@ while True:
 
             elif cl.upper() == 'MOTORISTA':
 
-                mot=motorista.Motorista(0,0,0,0,0)
+                mot = motorista.Motorista(0, 0, 0, 0, 0)
                 RED = "\033[1;31m"
                 RESET = "\033[0;0m"
 
@@ -108,7 +101,7 @@ while True:
                 break
 
             elif cl.upper() == ('ONIBUS' or 'ÔNIBUS'):
-                bus=onibus.Onibus(0,0,0,0,0)
+                bus = onibus.Onibus(0, 0, 0, 0, 0)
                 placa = int(input('Informe o número da placa'))
                 bus.set_placa(placa)
                 linha = int(input('Informe o número da linha '))
@@ -126,7 +119,7 @@ while True:
                 break
 
             elif cl.upper() == ('USUARIO' or 'USUÁRIO'):
-                U=user.Usuario(0,0,0,0,0,0)
+                U = user.Usuario(0, 0, 0, 0, 0, 0)
                 id_user = int(input('Informe o ID do usuário'))
                 U.set_id_user(id_user)
                 nome = input('Informe o nome do usuário ')
@@ -140,20 +133,15 @@ while True:
                 data_nascimento = input('Informe a data de nascimento \n formato: aaaa-mm-dd')
                 U.set_data_nascimento(data_nascimento)
                 U.insert_usuario(cursor)
-
-
                 print('usuário cadastrado')
                 break
 
             elif cl.upper() == 'SAIR':
                 break
             else:
-                print(RED+ f'{RED} Selecione uma classe válida {RESET}')
-
-
+                print(RED + f'{RED} Selecione uma classe válida {RESET}')
 
     elif acao.upper() == 'CONSULTAR':
-
 
         while True:
             cl = input('O que deseja consultar? \n digite sair para sair')
@@ -163,10 +151,9 @@ while True:
 
             save = input('Deseja salvar um CSV da consulta? sim ou não')
 
-
             if cl.upper() == ('USUARIO' or 'USUÁRIO'):
                 usu = user.Usuario
-                retornou = usu.select_usuario(0,cursor)
+                retornou = usu.select_usuario(0, cursor)
                 print(retornou[1])
                 for row in retornou[0]:
                     print(row)
@@ -176,9 +163,7 @@ while True:
                     salvarcsv.salvar_csv(cl, retornou[0], retornou[1])
                 break
 
-
             elif cl.upper() == ('CARTAO' or 'CARTÃO'):
-
                 card = cartao.Cartao
                 retornou = card.select_cartao(0, cursor)
                 print(retornou[1])
@@ -192,8 +177,8 @@ while True:
                 break
 
             elif cl.upper() == 'MOTORISTA':
-                mot=motorista.Motorista
-                retornou = mot.select_motorista(0,cursor)
+                mot = motorista.Motorista
+                retornou = mot.select_motorista(0, cursor)
                 print(retornou[1])
                 for row in retornou[0]:
                     print(row)
@@ -205,8 +190,8 @@ while True:
                 break
 
             elif cl.upper() == ('ONIBUS' or 'ÔNIBUS'):
-                on=onibus.Onibus
-                retornou = on.select_onibus(0,cursor)
+                on = onibus.Onibus
+                retornou = on.select_onibus(0, cursor)
                 print(retornou[1])
                 for row in retornou[0]:
                     print(row)
@@ -217,23 +202,21 @@ while True:
                     salvarcsv.salvar_csv(cl, retornou[0], retornou[1])
                 break
 
-
-
             else:
                 print(f'{RED} Selecione uma classe válida {RESET}')
     elif acao.upper() == 'ATUALIZAR':
         while True:
-            cl=input('O que deseja atualizar? \n bairro ou créditos')
+            cl = input('O que deseja atualizar? \n bairro ou créditos')
             if cl.upper() == 'BAIRRO':
-                id_user= int(input('Insira o ID do usuário '))
-                bairro=input('Qual é o novo bairro? ')
-                user.Usuario.atualizar_bairro(0,bairro,id_user,cursor)
+                id_user = int(input('Insira o ID do usuário '))
+                bairro = input('Qual é o novo bairro? ')
+                user.Usuario.atualizar_bairro(0, bairro, id_user, cursor)
                 break
 
             elif cl.upper() == ('CREDITOS' or 'CRÉDITOS'):
-                id_cartao=int(input('Informe o ID do cartão: '))
-                c=float(input('Quantos créditos foram adicionados? '))
-                cartao.Cartao.atualizar_saldo(0,id_cartao,c,cursor)
+                id_cartao = int(input('Informe o ID do cartão: '))
+                c = float(input('Quantos créditos foram adicionados? '))
+                cartao.Cartao.atualizar_saldo(0, id_cartao, c, cursor)
                 break
 
             else:

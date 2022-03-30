@@ -15,7 +15,7 @@ def update():
     system('cls' if OSname == 'nt' else 'clear')
     send = "TIC TAC TOE ʋ1.0\n\nPlayer 1: ⚪\nPlayer 2: ❌\n\nBoard:\n\n"
     i = 0
-    for item in data:
+    for i,item in enumerate(data):
         i += 1
         send = f"{send} {symbols[item]}"
         if i % 3 == 0:
