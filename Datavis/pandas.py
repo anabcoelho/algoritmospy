@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # Biblioteca para modelagem de dados
 import pandas as pd
 
-# Lista com os rotulos
+ Lista com os rotulos
 Labels = ['1º', '2º', '3º']
 
 # Lista com os valores
